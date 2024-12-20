@@ -7,7 +7,6 @@ create table employee{
 }
 
 
-
 insert into employee(employee_id,  name_emp,  department,  salary,  hire_date) 
 values(1, 'Alice',  'HR',  70000,  '2019-01-15'),
 (2, 'Bob',  'IT',  90000,  '2020-06-01'),
