@@ -29,5 +29,8 @@
     <Text Include="sql.txt">
       <Filter>Исходные файлы</Filter>
     </Text>
+    <Text Include="sql2.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
   </ItemGroup>
 </Project>

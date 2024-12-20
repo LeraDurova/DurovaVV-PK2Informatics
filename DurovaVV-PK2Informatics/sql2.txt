@@ -1,0 +1,59 @@
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,     
+    name VARCHAR(255) NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT 0
+);
+
+
+CREATE TABLE operations_log (
+    id SERIAL PRIMARY KEY,         
+    product_id INTEGER NOT NULL,   
+    operation VARCHAR(10) NOT NULL CHECK (operation IN ('ADD', 'REMOVE')), 
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    FOREIGN KEY (product_id) REFERENCES products (id)
+);
+
+
+
+
+CREATE OR REPLACE FUNCTION update_stock(
+    product_id INT,
+    operation VARCHAR,
+    qty INT
+) RETURNS VOID AS $$
+DECLARE
+    current_quantity INT; 
+BEGIN
+    SELECT quantity INTO current_quantity
+    FROM products
+    WHERE id = product_id;
+
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Product with id % does not exist', product_id;
+    END IF;
+
+    IF operation = 'ADD' THEN
+        UPDATE products
+        SET quantity = current_quantity + qty
+        WHERE id = product_id;
+
+        INSERT INTO operations_log (product_id, operation, quantity)
+        VALUES (product_id, 'ADD', qty);
+
+    ELSIF operation = 'REMOVE' THEN
+        IF current_quantity < quantity THEN
+            RAISE EXCEPTION 'Insufficient stock for product with id %', product_id;
+        END IF;
+
+        UPDATE products
+        SET quantity = current_quantity - qty
+        WHERE id = product_id;
+
+        INSERT INTO operations_log (product_id, operation, quantity)
+        VALUES (product_id, 'REMOVE', qty);
+
+    ELSE
+        RAISE EXCEPTION 'Invalid operation type: %', operation;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
