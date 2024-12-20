@@ -1,0 +1,25 @@
+create table employee{
+	employee_id int primary key,
+	name_emp varchar(50) not null,
+	department varchar(50) not null,
+	salary int,
+	hire_date DATE
+}
+
+
+
+insert into employee(employee_id,  name_emp,  department,  salary,  hire_date) 
+values(1, 'Alice',  'HR',  70000,  '2019-01-15'),
+(2, 'Bob',  'IT',  90000,  '2020-06-01'),
+(3,  'Charlie', 'IT',  80000,  '2021-03-10'),
+(4,  'Diana',  'Marketing',  60000,  '2022-11-25')
+
+
+select employee_id,name_emp,department,salary,hire_date
+from employee
+where department='IT' and hire_date > '2020-12-31'
+order by salary desc;
+
+
+ответ:
+3	"Charlie"	"IT"	80000	"2021-03-10"

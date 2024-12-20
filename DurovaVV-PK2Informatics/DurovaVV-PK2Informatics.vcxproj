@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="bash.txt" />
+    <Text Include="sql.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

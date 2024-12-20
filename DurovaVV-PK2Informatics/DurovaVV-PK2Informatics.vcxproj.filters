@@ -26,5 +26,8 @@
     <Text Include="bash.txt">
       <Filter>Исходные файлы</Filter>
     </Text>
+    <Text Include="sql.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
   </ItemGroup>
 </Project>
